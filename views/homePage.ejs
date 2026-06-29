@@ -1,0 +1,25 @@
+<%- include('./partials/head') %>
+<body class="min-h-screen bg-slate-50 text-slate-900"></body>
+    <%- include('./partials/navbar') %>
+    <main class="mx-auto flex min-h-[calc(100vh-73px)] max-w-5xl flex-col items-center justify-center px-6 py-12 text-center">
+        <section class="w-full rounded-lg border border-rose-100 bg-white px-6 py-12 shadow-sm">
+            <h1 class="text-4xl font-bold tracking-tight text-slate-950 sm:text-6xl">Welcome To AirBnB</h1>
+            <form action="/routes/add-home" class="mt-8">
+                <button type="submit" class="rounded-md bg-rose-600 px-6 py-3 text-lg font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200 cursor-pointer">Register Your Home</button>
+            </form>
+        </section>
+        <h1>Registered Homes:</h1>
+        <section>
+            <% homes.forEach((home) => { %>
+            <div class="house-display-catalogs border-black">
+                <p><%= home.houseType %></p>
+                <p><%= home.ownerName %></p>
+                <p><%= home.phoneNumber %></p>
+                <p><%= home.price %></p>
+            </div>
+            <% }); %>
+        </section>
+    </main>
+    
+</body>
+</html>
