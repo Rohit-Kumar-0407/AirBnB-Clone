@@ -2,13 +2,14 @@
 const Homes = require('../models/registeredHomesDataModel')
 
 const getAddHome = (req,res,next) => {
-    res.render('addHome', {title: 'Register Home'});
+    res.render('host/add-home', {title: 'Register Home'});
 };
 
 const postaddHome = (req, res, next) => {
-    res.render('homeAdded', {title: 'Home Added'});
-    const {ownerName, phoneNumber, houseType, price} = req.body;      //Unpacking contents from req.body
-    const home = new Homes(ownerName, phoneNumber, houseType, price);
+    res.render('host/home-added', {title: 'Home Added'});
+    const {ownerName, phoneNumber, houseType, location, rating, photo, price} = req.body;      //Unpacking contents from req.body
+    const home = new Homes(ownerName, phoneNumber, houseType, location, rating, photo, price);
+    console.log(home);
     home.save();
 };
 

@@ -1,9 +1,12 @@
-    <header class="border-b border-slate-200 bg-white shadow-sm">
-        <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-            <a href="/routes/home" class="text-xl font-bold text-rose-600">AirBnB</a>
+    <header class="border-b border-slate-200 bg-white shadow-sm flex items-center px-6">
+        <a href="/routes/home" class="font-bold text-rose-600 text-3xl mx-3 my-3">AirBnB</a>
+        <nav class="mx-auto flex max-w-5xl items-center justify-center px-6 py-4">
             <ul class="flex items-center gap-3 text-sm font-medium">
-                <li><a href="/routes/home" class="rounded-md bg-rose-50 px-4 py-2 text-rose-700 transition hover:bg-rose-100">Home</a></li>
-                <li><a href="/routes/add-home" class="rounded-md px-4 py-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-950">Add Home</a></li>
+                <li><a href="/routes/home" class=" <%= (title === 'AirBnB - Book Your New Home') ? 'bg-rose-50 text-rose-700' : 'hover:bg-rose-100 text-slate-600' %> rounded-md px-4 py-2  transition">Home</a></li>
+                <li><a href="/routes/add-home" class=" <%= (title === 'Register Home') ? 'bg-rose-50 text-rose-700' : 'hover:bg-rose-100 text-slate-600' %> rounded-md px-4 py-2  transition"> Add Home</a></li>
+                <li><a href="/routes/favourites" class=" <%= (title === 'Favourites' || title === 'Home Added') ? 'bg-rose-50 text-rose-700' : 'hover:bg-rose-100 text-slate-600' %> rounded-md px-4 py-2  transition"> Favourites</a></li>
+                <li><a href="/routes/reserve" class=" <%= (title === 'Reserve') ? 'bg-rose-50 text-rose-700' : 'hover:bg-rose-100 text-slate-600' %> rounded-md px-4 py-2  transition"> Reserve</a></li>
+                <li><a href="/routes/bookings" class=" <%= (title === 'Bookings') ? 'bg-rose-50 text-rose-700' : 'hover:bg-rose-100 text-slate-600' %> rounded-md px-4 py-2  transition"> Bookings</a></li>
             </ul>
         </nav>
     </header>

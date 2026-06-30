@@ -1,0 +1,36 @@
+<%- include('../partials/head') %>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <%- include('../partials/navbar') %>
+    <% const favouriteHomes = typeof homes !== 'undefined' ? homes : []; %>
+    <main class="mx-auto max-w-6xl px-6 py-10">
+        <%- include('../partials/page-header', {
+            eyebrow: 'Saved stays',
+            heading: 'Favourites',
+            description: 'Homes you liked are collected here so you can compare them quickly before booking.',
+            actionHref: '/routes/home',
+            actionText: 'Browse more',
+            actionVariant: 'secondary'
+        }) %>
+
+        <section class="mt-6 grid w-full gap-4 text-left sm:grid-cols-2 md:grid-cols-3">
+            <% if (favouriteHomes.length === 0) { %>
+            <%- include('../partials/empty-state', {
+                heading: 'No favourite homes yet',
+                message: 'Save homes you love and they will appear here.'
+            }) %>
+            <% } %>
+            <% favouriteHomes.forEach((home) => { %>
+            <%- include('../partials/home-card', {
+                home: home,
+                badgeText: 'Saved',
+                primaryHref: '/routes/reserve',
+                primaryText: 'Reserve',
+                secondaryHref: '/routes/home',
+                secondaryText: 'View homes'
+            }) %>
+            <% }); %>
+        </section>
+    </main>
+    
+</body>
+</html>

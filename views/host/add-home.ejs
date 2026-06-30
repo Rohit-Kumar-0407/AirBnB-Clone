@@ -1,6 +1,6 @@
-<%- include('./partials/head') %>
+<%- include('../partials/head') %>
 <body class="min-h-screen bg-slate-50 text-slate-900">
-    <%- include('./partials/navbar') %>
+    <%- include('../partials/navbar') %>
     <main class="mx-auto flex max-w-5xl justify-center px-6 py-12">
         <section class="w-full max-w-xl">
             <div class="text-center">
@@ -25,7 +25,19 @@
                     </select>
                 </div>
                 <div>
-                    <label for="price" class="mb-2 block text-sm font-medium text-slate-700">Price</label>
+                    <label for="location" class="mb-2 block text-sm font-medium text-slate-700">Location</label>
+                    <input type="text" name="location" placeholder="Enter Location" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                </div>
+                <div>
+                    <label for="rating" class="mb-2 block text-sm font-medium text-slate-700" >Rating</label>
+                    <input type="text" placeholder="Enter Rating" name="rating" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                </div>
+                <div>
+                    <label for="photo" class="mb-2 block text-sm font-medium text-slate-700">Photo</label>
+                    <input type="text" placeholder="Enter Photo URL" name="photo" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                </div>
+                <div>
+                    <label for="price" class="mb-2 block text-sm font-medium text-slate-700">Price Per Night</label>
                     <input id="price" type="number" placeholder="Enter Price" name="price" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
                 </div>
                 <button type="submit" class="w-full rounded-md bg-rose-600 px-5 py-3 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200 cursor-pointer">Submit</button>

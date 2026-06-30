@@ -10,5 +10,8 @@ const HomeControllers = require('../controllers/HomeControllers')
 
 //Home Page
 userRoute.get('/home', HomeControllers.getHome);
+userRoute.get('/favourites', HomeControllers.getFavourites);
+userRoute.get('/reserve', HomeControllers.getReserve);
+userRoute.get('/bookings', HomeControllers.getBookings);
 
 module.exports = userRoute;

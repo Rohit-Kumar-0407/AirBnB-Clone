@@ -10,17 +10,20 @@ const registeredHomes = []
 
 //Class for Structuring Data
 class Home {
-    constructor(ownerName, phoneNumber, houseType, price){
-        this.ownerName = ownerName;          //this refere to object being created through the class
+    constructor(ownerName, phoneNumber, houseType, location, rating, photo, price){
+        this.ownerName = ownerName;          //"this" refere to object being created through the class
         this.phoneNumber = phoneNumber;
         this.houseType = houseType;
+        this.location = location;
+        this.rating = rating;
+        this.photo = photo;
         this.price = price;
     }
 
     save(){
         registeredHomes.push(this);
         const filepath = path.join(rootDir, 'data', 'data.json');   //Transfering Incoming Data to Fake Database
-        fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
+        fs.appendFile(filepath, JSON.stringify(registeredHomes), (err) => {
             if(err === null){
                 console.log('File Written Successully');
             }

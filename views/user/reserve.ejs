@@ -1,0 +1,64 @@
+<%- include('../partials/head') %>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <%- include('../partials/navbar') %>
+    <main class="mx-auto grid max-w-6xl gap-6 px-6 py-10 lg:grid-cols-[1fr_380px]">
+        <div class="grid gap-6">
+            <%- include('../partials/page-header', {
+                boxed: true,
+                eyebrow: 'Reservation',
+                heading: 'Reserve your stay',
+                description: 'Add your trip details and contact information before confirming with the host.'
+            }) %>
+
+            <section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="#" class="grid gap-5">
+                <div class="grid gap-5 md:grid-cols-2">
+                    <div>
+                        <label for="checkIn" class="mb-2 block text-sm font-medium text-slate-700">Check-in</label>
+                        <input id="checkIn" type="date" name="checkIn" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                    </div>
+                    <div>
+                        <label for="checkOut" class="mb-2 block text-sm font-medium text-slate-700">Check-out</label>
+                        <input id="checkOut" type="date" name="checkOut" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                    </div>
+                </div>
+                <div class="grid gap-5 md:grid-cols-2">
+                    <div>
+                        <label for="guests" class="mb-2 block text-sm font-medium text-slate-700">Guests</label>
+                        <input id="guests" type="number" min="1" placeholder="2" name="guests" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                    </div>
+                    <div>
+                        <label for="phone" class="mb-2 block text-sm font-medium text-slate-700">Phone number</label>
+                        <input id="phone" type="tel" placeholder="Enter contact number" name="phone" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                    </div>
+                </div>
+                <div>
+                    <label for="message" class="mb-2 block text-sm font-medium text-slate-700">Message for host</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Share arrival time or special requests" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100"></textarea>
+                </div>
+                <button type="submit" class="rounded-md bg-rose-600 px-5 py-3 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200">Confirm reservation</button>
+            </form>
+            </section>
+        </div>
+
+        <aside class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm font-semibold text-slate-950">Reservation summary</p>
+            <div class="mt-5 grid gap-4 text-sm text-slate-600">
+                <div class="flex justify-between border-b border-slate-100 pb-3">
+                    <span>Nightly rate</span>
+                    <span class="font-semibold text-slate-950">Rs. --</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-100 pb-3">
+                    <span>Service fee</span>
+                    <span class="font-semibold text-slate-950">Rs. --</span>
+                </div>
+                <div class="flex justify-between text-base">
+                    <span>Total</span>
+                    <span class="font-bold text-slate-950">Rs. --</span>
+                </div>
+            </div>
+            <p class="mt-6 rounded-md bg-rose-50 p-4 text-sm text-rose-700">Final price will update after a listing and dates are selected.</p>
+        </aside>
+    </main>
+</body>
+</html>

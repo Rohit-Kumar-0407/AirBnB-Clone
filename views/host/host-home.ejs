@@ -1,0 +1,41 @@
+<%- include('../partials/head') %>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <%- include('../partials/navbar') %>
+    <% const hostHomes = typeof homes !== 'undefined' ? homes : []; %>
+    <main class="mx-auto max-w-6xl px-6 py-10">
+        <%- include('../partials/page-header', {
+            boxed: true,
+            eyebrow: 'Host dashboard',
+            heading: 'Manage Homes',
+            description: 'Review your registered homes, edit listing details, and keep guest-facing information current.',
+            actionHref: '/routes/add-home',
+            actionText: 'Add new home'
+        }) %>
+
+        <section class="mt-6 grid gap-4 md:grid-cols-3">
+            <%- include('../partials/stat-card', { label: 'Total listings', value: hostHomes.length, description: 'Homes currently registered.' }) %>
+            <%- include('../partials/stat-card', { label: 'Average rating', value: '--', description: 'Ratings will appear with guest reviews.' }) %>
+            <%- include('../partials/stat-card', { label: 'Reservations', value: '0', description: 'Confirmed stays for your homes.' }) %>
+        </section>
+
+        <section class="mt-6 grid w-full gap-4 text-left sm:grid-cols-2 md:grid-cols-3">
+            <% if (hostHomes.length === 0) { %>
+            <%- include('../partials/empty-state', {
+                heading: 'No homes added yet',
+                message: 'Add your first home to start managing host listings.'
+            }) %>
+            <% } %>
+            <% hostHomes.forEach((home) => { %>
+            <%- include('../partials/home-card', {
+                home: home,
+                variant: 'host',
+                primaryHref: '#',
+                primaryText: 'Edit',
+                secondaryHref: '/routes/home',
+                secondaryText: 'View listing'
+            }) %>
+            <% }); %>
+        </section>
+    </main>
+</body>
+</html>
