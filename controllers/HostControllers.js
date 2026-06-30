@@ -13,5 +13,12 @@ const postaddHome = (req, res, next) => {
     home.save();
 };
 
+const getHostHomeList = (req, res, next) => {
+    Homes.fetchAll((homes) => {
+        res.render('host/host-home', {homes: homes, title: 'Host Home Listing'});
+    });
+}
+
 exports.getAddHome = getAddHome;
 exports.postaddHome = postaddHome;
+exports.getHostHomeList = getHostHomeList;

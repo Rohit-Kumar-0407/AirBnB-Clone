@@ -21,7 +21,14 @@ const getBookings = (req, res, next) => {
     res.render('user/bookings', {title: 'Bookings'});
 }
 
+const getHomeListings = (req, res, next) => {
+    Homes.fetchAll((homes) => {
+        res.render('user/home-list', {homes: homes, title: 'Home Listings'});
+    });
+}
+
 exports.getHome = getHome;
 exports.getFavourites = getFavourites;
 exports.getReserve = getReserve;
 exports.getBookings = getBookings;
+exports.getHomeListings = getHomeListings;

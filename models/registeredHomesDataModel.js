@@ -23,7 +23,7 @@ class Home {
     save(){
         registeredHomes.push(this);
         const filepath = path.join(rootDir, 'data', 'data.json');   //Transfering Incoming Data to Fake Database
-        fs.appendFile(filepath, JSON.stringify(registeredHomes), (err) => {
+        fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
             if(err === null){
                 console.log('File Written Successully');
             }
