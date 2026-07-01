@@ -1,1 +1,1 @@
-[{"ownerName":"User","phoneNumber":"123456789","houseType":"House","location":"Earth","rating":"5","photo":"url","price":"1"}]
+[{"id":"101","ownerName":"Rohit Kumar","phoneNumber":"9969855655","houseType":"Bungalow","location":"Mumbai","rating":"5","photo":"url","price":"4500"},{"id":"102","ownerName":"User","phoneNumber":"123456789","houseType":"Apartment","location":"Place","rating":"5","photo":"url","price":"1000"},{"ownerName":"User2","phoneNumber":"987654321","houseType":"Villa","location":"Village","rating":"5","photo":"url","price":"2000","id":"0.20618593798352458"}]

@@ -16,9 +16,9 @@ app.use(express.static(path.join(rootDir, 'public')));
 app.set('view engine', 'ejs');
 
 //Routes
-app.use('/routes/',hostRoute);
-app.use('/routes/', userRoute);
-app.use('/routes/', Page404);
+app.use('/host',hostRoute);
+app.use('/', userRoute);
+app.use('/', Page404);
 
 //SQL Database Import
 // db.execute('SELECT * FROM AirBnB-Clone;').then((rows, fields) => {
@@ -31,5 +31,5 @@ app.use('/routes/', Page404);
 //Server
 const PORT = 8000;
 app.listen(PORT, () => {
-    console.log(`Server Running on http://localhost:${PORT}/routes/home`);
+    console.log(`Server Running on http://localhost:${PORT}/home`);
 })

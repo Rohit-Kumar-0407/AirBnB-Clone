@@ -4,9 +4,11 @@ const path = require('path');
 
 //Local Modules
 const rootDir = require('../utils/path');
+const filepath = path.join(rootDir, 'data', 'data.json');
 
 //Fake Database
 const registeredHomes = []
+const FavHomes = [];
 
 //Class for Structuring Data
 class Home {
@@ -21,28 +23,57 @@ class Home {
     }
 
     save(){
-        registeredHomes.push(this);
-        const filepath = path.join(rootDir, 'data', 'data.json');   //Transfering Incoming Data to Fake Database
-        fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
-            if(err === null){
-                console.log('File Written Successully');
+        this.id = Math.random().toString();
+        //Transfering Incoming Data to Fake Database
+
+        //Reading old data
+        fs.readFile(filepath, (err, FileContent) => {
+            let homes = [];
+            (err == null) ? console.log('File Read Successfully') : console.log(err);
+            //Adding previous data once again
+            try {
+                homes = JSON.parse(FileContent);
+            } catch(e){
+                homes = [];
             }
-            else{
-                console.log(err);
-            }
+            //Adding new data
+            homes.push(this);
+            //Writing all data to database
+            fs.writeFile(filepath, JSON.stringify(homes), (err) => {
+                (err == null) ? console.log('File Written Successfully') : console.log(err);
+            });
         })    
     }
 
     static fetchAll(callback){
-        const filepath = path.join(rootDir, 'data', 'data.json');
         const FileContent = fs.readFile(filepath, (err,data) => {
             let homes = [];
-            if(!err){
+            try{
                 homes = JSON.parse(data);
+            }catch(e){
+                homes = [];
             }
             callback(homes);
         });
     };
+
+    static FindByID(homeId, callback){
+        fs.readFile(filepath, (err, data) => {
+            let homes = [];
+            try {
+                homes = JSON.parse(data);
+            } catch(e){
+                homes = [];
+            }
+            let selectedHome = [];
+            homes.forEach((H) => {
+                if(H.id == homeId){
+                    selectedHome = H;
+                }
+            })
+            callback(selectedHome);
+        });
+    }
 };
 
 

@@ -9,7 +9,7 @@
         <%- include('../partials/empty-state', {
             heading: 'No home selected',
             message: 'Choose a registered home first to view photos, host details, pricing, and reservation options.',
-            actionHref: '/routes/home',
+            actionHref: '/home',
             actionText: 'Back to homes'
         }) %>
         <% } else { %>
@@ -40,8 +40,8 @@
                     <p><span class="font-semibold text-slate-900">Property:</span> <%= selectedHome.houseType %></p>
                     <p><span class="font-semibold text-slate-900">Location:</span> <%= selectedHome.location %></p>
                 </div>
-                <a href="/routes/reserve" class="mt-6 flex w-full justify-center rounded-md bg-rose-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200">Reserve this home</a>
-                <a href="/routes/home" class="mt-3 flex w-full justify-center rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700">Back to listings</a>
+                <a href="/reserve" class="mt-6 flex w-full justify-center rounded-md bg-rose-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200">Reserve this home</a>
+                <a href="/home" class="mt-3 flex w-full justify-center rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700">Back to listings</a>
             </aside>
         </section>
         <% } %>

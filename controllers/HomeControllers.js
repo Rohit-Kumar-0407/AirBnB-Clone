@@ -7,11 +7,6 @@ const getHome = (req, res, next) => {
     })
 }
 
-const getFavourites = (req, res, next) => {
-    Homes.fetchAll((homes) => {
-        res.render('user/favourite-list', {homes: homes, title: 'Favourites'});
-    })
-}
 
 const getReserve = (req, res, next) => {
     res.render('user/reserve', {title: 'Reserve'});
@@ -27,8 +22,21 @@ const getHomeListings = (req, res, next) => {
     });
 }
 
+const getHomeDetails = (req, res, next) => {
+    const homeId = req.params.homeId;
+    Homes.FindByID(homeId, (home) => {
+        console.log(home);
+        if(home.length == 0){
+           res.status(404).render('page404', {title: 'ERROR 404'});
+        }
+        else {
+            res.render('user/home-detail', {title: 'Home Detail', home: home});
+        }
+    });
+}
+
 exports.getHome = getHome;
-exports.getFavourites = getFavourites;
 exports.getReserve = getReserve;
 exports.getBookings = getBookings;
 exports.getHomeListings = getHomeListings;
+exports.getHomeDetails = getHomeDetails;

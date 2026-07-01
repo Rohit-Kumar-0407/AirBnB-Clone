@@ -7,7 +7,7 @@
             eyebrow: 'Saved stays',
             heading: 'Favourites',
             description: 'Homes you liked are collected here so you can compare them quickly before booking.',
-            actionHref: '/routes/home',
+            actionHref: '/home',
             actionText: 'Browse more',
             actionVariant: 'secondary'
         }) %>
@@ -23,9 +23,9 @@
             <%- include('../partials/home-card', {
                 home: home,
                 badgeText: 'Saved',
-                primaryHref: '/routes/reserve',
+                primaryHref: '/reserve',
                 primaryText: 'Reserve',
-                secondaryHref: '/routes/home',
+                secondaryHref: '/home',
                 secondaryText: 'View homes'
             }) %>
             <% }); %>
