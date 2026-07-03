@@ -23,25 +23,34 @@ class Home {
     }
 
     save(){
-        this.id = Math.random().toString();
-        //Transfering Incoming Data to Fake Database
-
         //Reading old data
         fs.readFile(filepath, (err, FileContent) => {
-            let homes = [];
+            let registeredHomes = [];
             (err == null) ? console.log('File Read Successfully') : console.log(err);
             //Adding previous data once again
             try {
-                homes = JSON.parse(FileContent);
+                registeredHomes = JSON.parse(FileContent);
             } catch(e){
-                homes = [];
+                registeredHomes = [];
             }
-            //Adding new data
-            homes.push(this);
+            if(this.id){  //Edit Mode
+                console.log('In editing mode');
+                registeredHomes = registeredHomes.map(home => {
+                    return (home.id == this.id) ? this : home;
+                })
+
+            }
+            else { //Create Mode
+                console.log('In creation mode')
+                this.id = Math.random().toString();
+                //Adding new data
+                registeredHomes.push(this);
+            }
             //Writing all data to database
-            fs.writeFile(filepath, JSON.stringify(homes), (err) => {
+            fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
                 (err == null) ? console.log('File Written Successfully') : console.log(err);
             });
+            
         })    
     }
 
@@ -73,6 +82,22 @@ class Home {
             })
             callback(selectedHome);
         });
+    }
+
+    static deleteHome(homeId, callback){
+        const FileContent = fs.readFile(filepath, (err,data) => {
+            let registeredHomes = [];
+            try{
+                registeredHomes = JSON.parse(data);
+            }catch(e){
+                registeredHomes = [];
+            }
+            registeredHomes = registeredHomes.filter(home => home.id != homeId)
+            fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
+                (err == null) ? console.log('File Written Successfully') : console.log(err);
+            });
+            callback();   
+        });   
     }
 };
 

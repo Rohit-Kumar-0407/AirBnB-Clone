@@ -9,7 +9,8 @@
             description: 'Update listing details so guests see accurate pricing, contact information, and stay details.'
         }) %>
 
-        <form action="#" method="POST" class="mt-6 grid gap-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-2">
+        <form action="/host/edit-home/<%= home.id %>?editing=True" method="POST" class="mt-6 grid gap-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-2">
+            <input type="hidden" value="<%- home.id %>">
             <div>
                 <label for="ownerName" class="mb-2 block text-sm font-medium text-slate-700">Owner Name</label>
                 <input id="ownerName" type="text" name="ownerName" value="<%= editHome.ownerName || '' %>" placeholder="Enter owner name" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
@@ -44,8 +45,8 @@
                 <input id="photo" type="text" name="photo" value="<%= editHome.photo || '' %>" placeholder="Enter photo URL" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
             </div>
             <div class="flex gap-3 lg:col-span-2">
-                <button type="submit" class="rounded-md bg-rose-600 px-5 py-3 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200">Save changes</button>
-                <a href="/home" class="rounded-md border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700">Cancel</a>
+                <button type="submit" class="rounded-md bg-rose-600 px-5 py-3 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200 cursor-pointer">Save changes</button>
+                <a href="/home" class="rounded-md border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700 cursor-pointer">Cancel</a>
             </div>
         </form>
     </main>

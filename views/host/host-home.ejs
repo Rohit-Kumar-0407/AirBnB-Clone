@@ -29,11 +29,10 @@
             <%- include('../partials/home-card', {
                 home: home,
                 variant: 'host',
-                primaryHref: '#',
+                primaryHref: '/host/edit-home/' + (home.id) + '?editing=True',
                 primaryText: 'Edit',
-                secondaryHref: '#',
-                secondaryText: 'Delete Listing',
-                secondaryHref: '#'                
+                tertiaryHref: '/host/delete-home/' + (home.id),
+                tertiaryText: 'Delete Listing'          
             }) %>
             <% }); %>
         </section>

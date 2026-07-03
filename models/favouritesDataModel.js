@@ -22,19 +22,12 @@ const saveFav = (homeId) => {
             if(H.id == homeId){
                 selectedHome = H;
             }
-        })
-        FavHomes.push(selectedHome);
-        if(FavHomes.length == 1){
-            fs.writeFile(filepath, JSON.stringify(FavHomes), (err) => {
-                (err == null) ? console.log('File Written Successfully') : console.log(err);
-            });
-            console.log('Favourites Added Successfully');
-        }
-        else if(FavHomes.some(home => home.id === selectedHome.id)){
+        });
+        if(FavHomes.some(home => home.id === selectedHome.id)){
             console.log('Already Added');
         }
         else {
-            console.log(FavHomes);
+            FavHomes.push(selectedHome);
             fs.writeFile(filepath, JSON.stringify(FavHomes), (err) => {
                 (err == null) ? console.log('File Written Successfully') : console.log(err);
             });
@@ -55,5 +48,23 @@ const fetchFav = (callback) => {
     });
 }
 
+const deleteFavHome = (homeId, callback) => {
+    const FileContent = fs.readFile(filepath, (err,data) => {
+        let FavHomes = [];
+        try{
+            Favhomes = JSON.parse(data);
+        }catch(e){
+            console.log(e);
+            Favhomes = [];
+        }
+        Favhomes = Favhomes.filter(home => home.id != homeId)
+        fs.writeFile(filepath, JSON.stringify(Favhomes), (err) => {
+            (err == null) ? console.log('File Written Successfully') : console.log(err);
+        });
+        callback();   
+    });   
+}
+
 exports.saveFav = saveFav;
 exports.fetchFav = fetchFav;
+exports.deleteFavHome = deleteFavHome;

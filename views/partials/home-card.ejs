@@ -42,7 +42,12 @@
     <div class="flex items-center justify-between border-t border-slate-100 px-4 py-3">
         <a href="<%= primaryHref %>" class="rounded-md bg-rose-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-rose-700"><%= primaryText %></a>
         <% if (typeof secondaryHref !== 'undefined' && secondaryHref && typeof secondaryText !== 'undefined' && secondaryText) { %>
-        <a href="<%= secondaryHref %>" class="text-xs font-semibold text-slate-600 transition hover:text-rose-700"><%= secondaryText %></a>
+        <a href="<%= secondaryHref %>" class="text-xs font-semibold text-red-500 transition hover:text-red-700"><%= secondaryText %></a>
+        <% } %>
+        <% if (typeof tertiaryHref !== 'undefined' && tertiaryHref && typeof tertiaryText !== 'undefined' && tertiaryText) { %>
+        <form action="<%= tertiaryHref %>" method="POST">
+            <button type="submit" class="text-xs font-semibold text-red-500 transition hover:text-red-700 cursor-pointer"><%= tertiaryText %></button>
+        </form>
         <% } %>
     </div>
     <% } %>
