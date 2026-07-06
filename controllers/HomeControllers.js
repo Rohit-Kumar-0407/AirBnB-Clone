@@ -2,9 +2,11 @@
 const Homes = require('../models/registeredHomesDataModel')
 
 const getHome = (req, res, next) => {
-    Homes.fetchAll((homes) => {
-        res.render('user/home-page', {homes: homes, title: 'AirBnB - Book Your New Home'});
-    })
+    Homes.fetchAll().then(([rows,fields]) => {
+        res.render('user/home-page', {homes: rows, title: 'AirBnB - Book Your New Home'});
+    }).catch((err) => {
+        console.log(err);
+    }) 
 }
 
 
@@ -17,9 +19,11 @@ const getBookings = (req, res, next) => {
 }
 
 const getHomeListings = (req, res, next) => {
-    Homes.fetchAll((homes) => {
-        res.render('user/home-list', {homes: homes, title: 'Home Listings'});
-    });
+    Homes.fetchAll().then(([rows, fields]) => {
+        res.render('user/home-list', {homes: rows, title: 'Home Listings'});
+    }).catch((err) => {
+        console.log(err);
+    })
 }
 
 const getHomeDetails = (req, res, next) => {

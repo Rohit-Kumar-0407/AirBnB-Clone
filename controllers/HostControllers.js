@@ -7,9 +7,11 @@ const getAddHome = (req,res,next) => {
 };
 
 const getHostHomeList = (req, res, next) => {
-    Homes.fetchAll((homes) => {
-        res.render('host/host-home', {homes: homes, title: 'Host Home Listing'});
-    });
+    Homes.fetchAll().then(([rows, fields]) => {
+        res.render('host/host-home', {homes: rows, title: 'Host Home Listing'});
+    }).catch((err) => {
+        console.log(err);
+    })
 }
 
 const geteditHome = (req,res,next) => {
@@ -29,16 +31,16 @@ const geteditHome = (req,res,next) => {
 //POST Controllers
 const postaddHome = (req, res, next) => {
     res.render('host/home-added', {title: 'Home Added', editing: 'False'});
-    const {ownerName, phoneNumber, houseType, location, rating, photo, price} = req.body;      //Unpacking contents from req.body
-    const home = new Homes(ownerName, phoneNumber, houseType, location, rating, photo, price);
+    const {ownerName, phoneNumber, houseType, location, rating, photo, price, description} = req.body;      //Unpacking contents from req.body
+    const home = new Homes(ownerName, phoneNumber, houseType, location, rating, photo, price, description);
     home.save();
 };
 
 const updateHome = (req, res, next) => {
     const editing = req.query.editing;
     const homeId = req.params.homeId;
-    const {id, ownerName, phoneNumber, houseType, location, rating, photo, price} = req.body;      //Unpacking contents from req.body
-    const home = new Homes(ownerName, phoneNumber, houseType, location, rating, photo, price);
+    const {id, ownerName, phoneNumber, houseType, location, rating, photo, price, description} = req.body;      //Unpacking contents from req.body
+    const home = new Homes(ownerName, phoneNumber, houseType, location, rating, photo, price, description);
     home.id = homeId;
     home.save();
     res.render('host/home-added', {title: 'Home Updated', editing})
