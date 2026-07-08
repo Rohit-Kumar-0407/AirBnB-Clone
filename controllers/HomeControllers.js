@@ -19,7 +19,7 @@ const getBookings = (req, res, next) => {
 }
 
 const getHomeListings = (req, res, next) => {
-    Homes.fetchAll().then(([rows, fields]) => {
+    Homes.fetchAll().then(([[rows], fields]) => {
         res.render('user/home-list', {homes: rows, title: 'Home Listings'});
     }).catch((err) => {
         console.log(err);
@@ -28,15 +28,17 @@ const getHomeListings = (req, res, next) => {
 
 const getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
-    Homes.FindByID(homeId, (home) => {
-        console.log(home);
+    Homes.FindByID(homeId).then(([[home], fields]) => {
+        console.log(home)
         if(home.length == 0){
            res.status(404).render('page404', {title: 'ERROR 404'});
         }
         else {
             res.render('user/home-detail', {title: 'Home Detail', home: home});
         }
-    });
+    }).catch((err) => {
+        console.log(err);
+    })
 }
 
 exports.getHome = getHome;

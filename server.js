@@ -24,5 +24,5 @@ app.use('/', Page404);
 //Server
 const PORT = 8000;
 app.listen(PORT, () => {
-    console.log(`Server Running on http://localhost:${PORT}/home`)
+    console.log(`Server Running on http://localhost:${PORT}`)
 })

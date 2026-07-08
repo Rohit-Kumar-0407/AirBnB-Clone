@@ -10,7 +10,7 @@ const HomeControllers = require('../controllers/HomeControllers');
 const FavControllers = require('../controllers/FavControllers');
 
 //GET Requests
-userRoute.get('/home', HomeControllers.getHome);
+userRoute.get('/', HomeControllers.getHome);
 userRoute.get('/favourites', FavControllers.getFavourites);
 userRoute.get('/reserve', HomeControllers.getReserve);
 userRoute.get('/bookings', HomeControllers.getBookings);

@@ -1,6 +1,6 @@
 <% const cardVariant = typeof variant !== 'undefined' ? variant : 'guest'; %>
 <% const fallbackPhoto = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'; %>
-<% const homePhoto = home && home.photo && /^(https?:\/\/|\/)/.test(home.photo) ? home.photo : fallbackPhoto; %>
+<% const homePhoto = home && home.photourl && /^(https?:\/\/|\/)/.test(home.photourl) ? home.photourl : fallbackPhoto; %>
 <div class="house-display-catalogs overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
     <div class="relative">
         <img src="<%= homePhoto %>" alt="<%= home.houseType %> in <%= home.location %>" onerror="this.onerror=null;this.src='<%= fallbackPhoto %>'" class="h-36 w-full object-cover">
@@ -31,7 +31,7 @@
         </div>
         <% } %>
         <div class="mt-3 grid gap-1.5 border-t border-slate-100 pt-3 text-xs text-slate-600">
-            <p><span class="font-semibold text-slate-900"><%= cardVariant === 'host' ? 'Owner:' : 'Hosted by:' %></span> <%= home.ownerName %></p>
+            <p><span class="font-semibold text-slate-900"><%= cardVariant === 'host' ? 'Owner:' : 'Hosted by:' %></span> <%= home.name %></p>
             <p><span class="font-semibold text-slate-900">Contact:</span> <%= home.phoneNumber %></p>
             <% if (cardVariant === 'host') { %>
             <p><span class="font-semibold text-slate-900">Rating:</span> <%= home.rating %>/5</p>
