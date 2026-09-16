@@ -29,9 +29,9 @@
             <%- include('../partials/home-card', {
                 home: home,
                 variant: 'host',
-                primaryHref: '/host/edit-home/' + (home.id) + '?editing=True',
+                primaryHref: '/host/edit-home/' + (home._id) + '?editing=True',
                 primaryText: 'Edit',
-                tertiaryHref: '/host/delete-home/' + (home.id),
+                tertiaryHref: '/host/delete-home/' + (home._id),
                 tertiaryText: 'Delete Listing'          
             }) %>
             <% }); %>

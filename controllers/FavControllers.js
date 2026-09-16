@@ -3,7 +3,7 @@ const Homes = require('../models/favouritesDataModel')
 
 const getFavourites = (req, res, next) => {
     Homes.fetchFav((Favhomes) => {
-        res.render('user/favourite-list', {homes: Favhomes, title: 'Favourites'});
+        res.render('user/favourite-list', {homes: Favhomes, title: 'Favourites', isLoggedIn: req.session.isLoggedIn});
     })
 }
 

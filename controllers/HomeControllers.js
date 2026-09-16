@@ -2,25 +2,24 @@
 const Homes = require('../models/registeredHomesDataModel')
 
 const getHome = (req, res, next) => {
-    Homes.fetchAll().then(([rows,fields]) => {
-        res.render('user/home-page', {homes: rows, title: 'AirBnB - Book Your New Home'});
+    Homes.fetchAll().then((homes) => {
+        res.render('user/home-page', {homes: homes, title: 'AirBnB - Book Your New Home', isLoggedIn: req.session.isLoggedIn});
     }).catch((err) => {
         console.log(err);
     }) 
 }
 
-
 const getReserve = (req, res, next) => {
-    res.render('user/reserve', {title: 'Reserve'});
+    res.render('user/reserve', {title: 'Reserve', isLoggedIn: req.session.isLoggedIn});
 }
 
 const getBookings = (req, res, next) => {
-    res.render('user/bookings', {title: 'Bookings'});
+    res.render('user/bookings', {title: 'Bookings', isLoggedIn: req.session.isLoggedIn});
 }
 
 const getHomeListings = (req, res, next) => {
-    Homes.fetchAll().then(([[rows], fields]) => {
-        res.render('user/home-list', {homes: rows, title: 'Home Listings'});
+    Homes.fetchAll().then((homes) => {
+        res.render('user/home-list', {homes: homes, title: 'Home Listings', isLoggedIn: req.session.isLoggedIn});
     }).catch((err) => {
         console.log(err);
     })
@@ -28,13 +27,14 @@ const getHomeListings = (req, res, next) => {
 
 const getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
-    Homes.FindByID(homeId).then(([[home], fields]) => {
+    console.log(homeId);
+    Homes.FindByID(homeId).then((home) => {
         console.log(home)
         if(home.length == 0){
-           res.status(404).render('page404', {title: 'ERROR 404'});
+           res.status(404).render('page404', {title: 'ERROR 404', isLoggedIn: req.session.isLoggedIn});
         }
         else {
-            res.render('user/home-detail', {title: 'Home Detail', home: home});
+            res.render('user/home-detail', {title: 'Home Detail', home: home, isLoggedIn: req.session.isLoggedIn});
         }
     }).catch((err) => {
         console.log(err);

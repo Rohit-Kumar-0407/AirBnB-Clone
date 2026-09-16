@@ -1,4 +1,5 @@
-const db = require('../utils/database');
+const { ObjectId } = require('mongodb');
+const MongoDB = require('../utils/mongodb_database');   
 
 //Class for Structuring Data
 class Home {
@@ -14,28 +15,23 @@ class Home {
     }
 
     save(){
-        if(this.id !== undefined){ //Editng Mode
-            return db.execute("UPDATE registeredhomes SET name=(?), phoneNumber=(?), houseType=(?), location=(?), rating=(?), photourl=(?), price=(?), description=(?) WHERE id =(?)", [this.name, this.phoneNumber, this.houseType, this.location, this.rating, this.photourl, this.price, this.description, this.id]);
-        } else { //Create Mode
-            this.id = Math.random().toString();
-            return db.execute(
-                "INSERT INTO registeredhomes VALUES (?,?,?,?,?,?,?,?,?)", [this.id, this.name, this.price, this.location, this.rating, this.photourl, this.phoneNumber, this.description, this.houseType]
-            );
-        }
-        
+        const db = MongoDB.getDB();
+        //Insert many takes an array of objects
+        return db.collection("homes").insertOne(this);
     }
 
     static fetchAll(){
-        //Database Import
-        return db.execute('SELECT * FROM registeredhomes;');
+        const db = MongoDB.getDB();
+        return db.collection("homes").find().toArray();
     };
 
-    static FindByID(id){
-        return db.execute('SELECT * FROM registeredhomes WHERE id = (?)', [id]);
+    static FindByID(homeId){
+        const db = MongoDB.getDB();
+        return db.collection("homes").find({_id: new ObjectId(String(homeId))}).next();  
     }
 
     static deleteHome(homeId){
-        return db.execute('DELETE FROM registeredhomes WHERE id = (?)', [homeId]);
+        
     }
 };
 

@@ -23,7 +23,7 @@ const saveFav = (homeId) => {
                 selectedHome = H;
             }
         });
-        if(FavHomes.some(home => home.id === selectedHome.id)){
+        if(FavHomes.some(home => home._id === selectedHome._id)){
             console.log('Already Added');
         }
         else {
@@ -57,7 +57,7 @@ const deleteFavHome = (homeId, callback) => {
             console.log(e);
             Favhomes = [];
         }
-        Favhomes = Favhomes.filter(home => home.id != homeId)
+        Favhomes = Favhomes.filter(home => home._id != homeId)
         fs.writeFile(filepath, JSON.stringify(Favhomes), (err) => {
             (err == null) ? console.log('File Written Successfully') : console.log(err);
         });

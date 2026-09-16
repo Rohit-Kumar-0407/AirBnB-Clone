@@ -7,7 +7,7 @@
             eyebrow: 'Available stays',
             heading: 'Home Listings',
             description: 'Browse registered homes with pricing, location, ratings, and host details in a compact view.',
-            actionHref: '/add-home',
+            actionHref: '/login',
             actionText: 'Register home'
         }) %>
 
@@ -21,9 +21,9 @@
             <% listedHomes.forEach((home) => { %>
             <%- include('../partials/home-card', {
                 home: home,
-                primaryHref: '/reserve',
+                primaryHref: '/login',
                 primaryText: 'Book now',
-                secondaryHref: '/favourites',
+                secondaryHref: '/login',
             }) %>
             <% }); %>
         </section>
