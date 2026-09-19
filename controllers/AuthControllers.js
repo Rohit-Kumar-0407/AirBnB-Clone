@@ -13,7 +13,7 @@ const getSignUp = (req, res, next) => {
 const postLogin = (req, res, next) => {
     req.session.isLoggedIn = true;  //Setting a Session
     console.log(req.body);
-    res.redirect('/host/add-home');
+    res.redirect('/');
 }
 
 const postLogout = (req, res, next) => {

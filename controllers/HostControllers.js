@@ -7,7 +7,7 @@ const getAddHome = (req,res,next) => {
 };
 
 const getHostHomeList = (req, res, next) => {
-    Homes.fetchAll().then((homes) => {
+    Homes.find().then((homes) => {
         res.render('host/host-home', {homes: homes, title: 'Host Home Listing', isLoggedIn: req.session.isLoggedIn});
     }).catch((err) => {
         console.log(err);
@@ -18,7 +18,7 @@ const geteditHome = (req,res,next) => {
     const homeId = req.params.homeId;
     const editing = req.query.editing;
     if(editing == 'True'){
-        Homes.FindByID(homeId).then((home) => {
+        Homes.findById(homeId).then((home) => {
             if(home.length == 0){
                 res.status(404).render('page404', {title: 'ERROR 404', isLoggedIn: req.session.isLoggedIn});
             }
@@ -36,7 +36,7 @@ const postaddHome = (req, res, next) => {
     console.log(req.body);
     //Unpacking contents from req.body
     const {name, phoneNumber, houseType, location, rating, photourl, price, description} = req.body;      
-    const home = new Homes(name, phoneNumber, houseType, location, rating, photourl, price, description);
+    const home = new Homes({name, phoneNumber, houseType, location, rating, photourl, price, description});
     home.save().then((result) => {
         console.log('Data Added Successfully');
         console.log(result);
@@ -49,22 +49,35 @@ const postaddHome = (req, res, next) => {
 const updateHome = (req, res, next) => {
     const editing = req.query.editing;
     const homeId = req.params.homeId;
-    const {name, phoneNumber, houseType, location, rating, description, photourl, price} = req.body;      //Unpacking contents from req.body
-    const home = new Homes(name, phoneNumber, houseType, location, rating, photourl, price, description);
-    home._id = homeId;
-    home.save().then(() => {
-        console.log('Home Updated Successfully');
-        res.render('host/home-added', {title: 'Home Updated', editing, isLoggedIn: req.session.isLoggedIn});
+    //Unpacking contents from req.body
+    const {name, phoneNumber, houseType, location, rating, description, photourl, price} = req.body;      
+    Homes.findById(homeId).then((home) => {
+        home.name = name,
+        home.phoneNumber = phoneNumber,
+        home.houseType = houseType,
+        home.location = location,
+        home.rating = rating,
+        home.description = description,
+        home.photourl = photourl,
+        home.price = price
+        //Saving New Data
+        home.save().then((result) => {
+            console.log('Home Updated Successfully');
+            res.render('host/home-added', {title: 'Home Updated', editing, isLoggedIn: req.session.isLoggedIn});
+        }).catch((err) => {
+            console.log(err);
+        })
     }).catch((err) => {
         console.log(err);
     })
+    
 
 };
 
 const deleteHome = (req, res, next) => {     
     const homeId = req.params.homeId;
-    Homes.deleteHome(homeId).then(() => {
-        FavHomes.deleteFavHome(homeId, () => {
+    Homes.findByIdAndDelete(homeId).then(() => {
+        FavHomes.findByIdAndDelete(homeId, () => {
             console.log('Home Deleted Successfully');
             res.redirect('/host/home-listing');
         });   

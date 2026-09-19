@@ -15,9 +15,10 @@ userRoute.get('/favourites', FavControllers.getFavourites);
 userRoute.get('/reserve', HomeControllers.getReserve);
 userRoute.get('/bookings', HomeControllers.getBookings);
 userRoute.get('/home-listing', HomeControllers.getHomeListings);
-userRoute.get('/:homeId', HomeControllers.getHomeDetails);
+userRoute.get('/home/:homeId', HomeControllers.getHomeDetails);
 
 //POST Request
-userRoute.post('/favourites', FavControllers.postFavourites);
+userRoute.post('/add-favourites', FavControllers.postFavourites);
+userRoute.post('/delete-favourite/:favhomeId', FavControllers.postDeleteFavourites);
 
 module.exports = userRoute;

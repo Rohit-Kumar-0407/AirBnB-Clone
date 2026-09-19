@@ -19,14 +19,14 @@
                 message: 'Save homes you love and they will appear here.'
             }) %>
             <% } %>
-            <% favouriteHomes.forEach((home) => { %>
+            <% favouriteHomes.forEach((favhome) => { %>
             <%- include('../partials/home-card', {
-                home: home,
+                home: favhome,
                 badgeText: 'Saved',
                 primaryHref: '/reserve',
                 primaryText: 'Reserve',
-                secondaryHref: '/',
-                secondaryText: 'View homes'
+                tertiaryHref: '/delete-favourite/:homeId',
+                tertiaryText: 'Delete Favourite'
             }) %>
             <% }); %>
         </section>

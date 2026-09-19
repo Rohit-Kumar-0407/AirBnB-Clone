@@ -2,7 +2,7 @@
 const Homes = require('../models/registeredHomesDataModel')
 
 const getHome = (req, res, next) => {
-    Homes.fetchAll().then((homes) => {
+    Homes.find().then((homes) => {
         res.render('user/home-page', {homes: homes, title: 'AirBnB - Book Your New Home', isLoggedIn: req.session.isLoggedIn});
     }).catch((err) => {
         console.log(err);
@@ -18,7 +18,7 @@ const getBookings = (req, res, next) => {
 }
 
 const getHomeListings = (req, res, next) => {
-    Homes.fetchAll().then((homes) => {
+    Homes.find().then((homes) => {
         res.render('user/home-list', {homes: homes, title: 'Home Listings', isLoggedIn: req.session.isLoggedIn});
     }).catch((err) => {
         console.log(err);
@@ -27,9 +27,7 @@ const getHomeListings = (req, res, next) => {
 
 const getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
-    console.log(homeId);
-    Homes.FindByID(homeId).then((home) => {
-        console.log(home)
+    Homes.findByID(homeId).then((home) => {
         if(home.length == 0){
            res.status(404).render('page404', {title: 'ERROR 404', isLoggedIn: req.session.isLoggedIn});
         }

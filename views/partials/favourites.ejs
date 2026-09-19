@@ -1,6 +1,6 @@
 <% if(isLoggedIn == true) { %>
 <div class="relative">
-    <form action="/favourites" method="POST">
+    <form action="/add-favourites" method="POST">
         <input type="hidden" name="homeId" value='<%= home._id %>'>
         <button type="submit" class="absolute right-3 top-3 rounded-full bg-rose-600 hover:bg-rose-800 transition px-2.5 py-1 my-9 mx-2 text-xs font-semibold text-white shadow-sm cursor-pointer">Save</button>
     </form>

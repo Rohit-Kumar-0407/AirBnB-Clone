@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const session = require('express-session');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
 
 //Local Modules
 const hostRoute = require('./routes/hostRoute');
@@ -10,7 +12,7 @@ const userRoute = require('./routes/userRoute');
 const Page404 = require('./routes/404Page');
 const rootDir = require('./utils/path');
 const AuthRoute = require('./routes/authRoute');
-const MongoClient = require('./utils/mongodb_database');
+
 
 //Common Commands
 app.use(express.urlencoded({extended: true}));
@@ -39,9 +41,11 @@ app.use('/', Page404);
 
 //Server
 const PORT = 8000;
-MongoClient.mongoConnect(() => {
+mongoose.connect(process.env.MONGODB_URL).then((client) => {
     console.log('Connected To MongoDB');
     app.listen(PORT, () => {
-    console.log(`Server Running on http://localhost:${PORT}`)
-})
+        console.log(`Server Running on http://localhost:${PORT}`);
+    })
+}).catch((err) => {
+    console.log(err);
 })
