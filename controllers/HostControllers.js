@@ -77,10 +77,8 @@ const updateHome = (req, res, next) => {
 const deleteHome = (req, res, next) => {     
     const homeId = req.params.homeId;
     Homes.findByIdAndDelete(homeId).then(() => {
-        FavHomes.findByIdAndDelete(homeId, () => {
-            console.log('Home Deleted Successfully');
-            res.redirect('/host/home-listing');
-        });   
+        console.log('Home Deleted Successfully');
+        res.redirect('/host/home-listing');   
     }).catch((err) => {
         console.log(err);
     })

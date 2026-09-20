@@ -46,6 +46,7 @@
         <% } %>
         <% if (typeof tertiaryHref !== 'undefined' && tertiaryHref && typeof tertiaryText !== 'undefined' && tertiaryText) { %>
         <form action="<%= tertiaryHref %>" method="POST">
+            <input type="hidden" name="favhomeId" value="<%= home._id %>">
             <button type="submit" class="text-xs font-semibold text-red-500 transition hover:text-red-700 cursor-pointer"><%= tertiaryText %></button>
         </form>
         <% } %>

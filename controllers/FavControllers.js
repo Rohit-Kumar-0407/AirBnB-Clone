@@ -1,14 +1,14 @@
+//Core Modules
+const mongoose = require('mongoose');
+
 //Local Module
 const FavHomes = require('../models/favouritesDataModel');
 const Homes = require('../models/registeredHomesDataModel');
 
 const getFavourites = (req, res, next) => {
-    FavHomes.find().then((favourites) => {
-        favourites = favourites.map(fav => fav.homeId. toString());
-        Homes.find().then((homes) => {
-            const favouriteHomes = homes.filter((home) => favourites.includes(home._id.toString()));
-            res.render('user/favourite-list', {homes: favouriteHomes, title: 'Favourites', isLoggedIn: req.session.isLoggedIn});
-        })  
+    FavHomes.find().populate("homeId").then((favourites) => {
+        const favouriteHomes = favourites.map(fav => fav.homeId);
+        res.render('user/favourite-list', {homes: favouriteHomes, title: 'Favourites', isLoggedIn: req.session.isLoggedIn});
     }).catch((err) => {
         console.log(err);
     })
@@ -17,7 +17,7 @@ const getFavourites = (req, res, next) => {
 const postFavourites = (req, res, next) => {
     const homeId = req.body.homeId;
     FavHomes.findOne({homeId: homeId}).then((existingFav) => {
-        if(exisingFav){
+        if(existingFav){
             console.log('Already Added');
             res.redirect('/favourites');
         } else {
@@ -31,14 +31,11 @@ const postFavourites = (req, res, next) => {
             })
         }
     })
-    
-    
 }
 
 const postDeleteFavourites = (req, res, next) => {
-    const favhomeId = req.params.favhomeId;
-    console.log(favhomeId);
-    FavHomes.findByIdAndDelete(favhomeId).then((result) => {
+    const favhomeId = req.body.favhomeId;
+    FavHomes.findOneAndDelete({homeId: new mongoose.Types.ObjectId(favhomeId)}).then((result) => {
         console.log(result);
         console.log('Favourite Deleted Successfully');
         res.redirect('/favourites');

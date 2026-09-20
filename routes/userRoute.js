@@ -19,6 +19,6 @@ userRoute.get('/home/:homeId', HomeControllers.getHomeDetails);
 
 //POST Request
 userRoute.post('/add-favourites', FavControllers.postFavourites);
-userRoute.post('/delete-favourite/:favhomeId', FavControllers.postDeleteFavourites);
+userRoute.post('/delete-favourite', FavControllers.postDeleteFavourites);
 
 module.exports = userRoute;

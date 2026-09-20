@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const FavHomes = require('../models/favouritesDataModel');
 
 const homeSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -12,9 +13,9 @@ const homeSchema = new mongoose.Schema({
 })
 
 homeSchema.pre('findOneAndDelete', async function(next){
+    console.log('Came to prehook fro deleting in FavHomes');
     const homeId = this.getQuery()["_id"];
-    await Favourite.deleteMany({houseId: homeId});
-    next();
+    await FavHomes.deleteMany({homeId: homeId});
 })
 
 module.exports = mongoose.model("Homes", homeSchema);
