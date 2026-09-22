@@ -19,10 +19,21 @@
                 <p class="mt-2 text-sm text-slate-600">Use your account details to get back to AirBnB.</p>
             </div>
 
+            <% if (typeof errorMessages !== 'undefined' && errorMessages.length > 0) { %>
+                <div role="alert" aria-labelledby="login-errors-title" class="mt-6 rounded-md border border-red-200 bg-red-50 p-4">
+                    <p id="login-errors-title" class="text-sm font-semibold text-red-800">Please fix the following errors:</p>
+                    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm">
+                        <% errorMessages.forEach((message) => { %>
+                            <li class="text-red-800"><%= message %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            <% } %>
+
             <form action="/login" method="POST" class="mt-6 space-y-5">
                 <div>
                     <label for="email" class="mb-2 block text-sm font-medium text-slate-700">Email address</label>
-                    <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                    <input id="email" type="email" name="email" value="<%= (typeof oldInput !== 'undefined' && oldInput) ? oldInput.email : '' %>" placeholder="you@example.com" autocomplete="email" required class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
                 </div>
 
                 <div>

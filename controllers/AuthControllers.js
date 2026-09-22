@@ -1,4 +1,6 @@
 const {check, validationResult} = require('express-validator');
+const bcryptjs = require('bcryptjs');
+const User = require('../models/UserModel');
 
 //GET Route
 const getLogin = (req, res, next) => {
@@ -10,9 +12,14 @@ const getSignUp = (req, res, next) => {
 };
 
 //POST Route
-const postLogin = (req, res, next) => {
+const postLogin = async (req, res, next) => {
+    const {email, password} = req.body;
+    const user = await User.findOne({email: email});
+    if(!user){
+        res.status(422).render('auth/login-page', {title: 'Login', isLoggedIn: false, errorMessages: ["User does not exist"], oldInput: {email}});
+    }
+
     req.session.isLoggedIn = true;  //Setting a Session
-    console.log(req.body);
     res.redirect('/');
 }
 
@@ -72,6 +79,14 @@ const postSignUp = [
         }
         return true;
     }),
+    
+    //Role Type Validation
+    check('role')
+    .notEmpty()
+    .withMessage('User type is required')
+    .isIn(['guest', 'host'])
+    .withMessage('Invalid User Type'),
+
 
     //Terms Accepted Validation
     check('terms')
@@ -84,16 +99,26 @@ const postSignUp = [
         return true;
     })
     
-    ,(req, res, next) => {
+    , (req, res, next) => {
         console.log(req.body);
-        const {firstName, lastName, email} = req.body;
+        const {firstName, lastName, email, password, role} = req.body;
         const errors = validationResult(req);
 
         if(!errors.isEmpty()){
             return res.status(422).render('auth/sign-up', {title: 'Sign Up', isLoggedIn: false, errorMessages: errors.array().map(error => error.msg), oldInput: {firstName, lastName, email}});
         } else {
-            req.session.isLoggedIn = true;
-            res.redirect('/');
+            bcryptjs.hash(password, 12).then((hashedPassword) => {
+                const user = new User({firstName, lastName, email, hashedPassword, role});
+                user.save().then(() => {
+                    console.log('New User Registered Successfully');
+                    res.redirect('/login');
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }).catch((err) => {
+                console.log(err);
+            })
+                        
         }
     }
 ]

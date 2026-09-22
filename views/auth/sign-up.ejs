@@ -59,6 +59,20 @@
                         <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password" autocomplete="new-password" required class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
                     </div>
                 </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">I am a</label>
+                    <div class="flex gap-6">
+                        <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
+                            <input type="radio" name="role" value="guest" required class="accent-rose-600">
+                            Guest
+                        </label>
+                        <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
+                            <input type="radio" name="role" value="host" required class="accent-rose-600">
+                            Host
+                        </label>
+                    </div>
+                </div>
+
                 <label for="terms" class="flex items-start gap-3 text-sm font-medium text-slate-700">
                     <input id="terms" type="checkbox" name="terms" required class="mt-1">
                     <span>I agree to the terms and conditions.</span>

@@ -5,6 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const connetMongoDBsession = require('connect-mongodb-session')(session);
 
 //Local Modules
 const hostRoute = require('./routes/hostRoute');
@@ -12,6 +13,7 @@ const userRoute = require('./routes/userRoute');
 const Page404 = require('./routes/404Page');
 const rootDir = require('./utils/path');
 const AuthRoute = require('./routes/authRoute');
+const FavRoute = require('./routes/FavRoute');
 
 
 //Common Commands
@@ -19,15 +21,24 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(rootDir, 'public')));
 app.set('view engine', 'ejs');
 
-//Routes
+//Sessions
+const store = new connetMongoDBsession({
+    uri: process.env.MONGODB_URL,
+    collection: 'sessions'
+});
+
 app.use(session({
     // Secret key used to sign the session ID cookie and encrypt session data
     secret: 'Secret',
     // Forces session to be saved back to the session store, even if not modified
     resave: false,
     // Forces a session that is "uninitialized" to be saved to the store
-    saveUninitialized: true
+    saveUninitialized: true,
+    //Session Storage in MongoDB
+    store: store
 }));
+
+//Routes
 app.use('/', AuthRoute);
 app.use('/', userRoute);
 app.use('/host', (req, res, next) => {   
@@ -37,6 +48,13 @@ app.use('/host', (req, res, next) => {
         res.redirect('/login');
     }
 }, hostRoute);
+app.use('/host/fav', (req, res, next) => {   
+    if(req.session.isLoggedIn){
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}, FavRoute);
 app.use('/', Page404);
 
 //Server
