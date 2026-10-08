@@ -5,7 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
-const connetMongoDBsession = require('connect-mongodb-session')(session);
+const MongoStore = require('connect-mongo').default;
 
 //Local Modules
 const hostRoute = require('./routes/hostRoute');
@@ -22,9 +22,9 @@ app.use(express.static(path.join(rootDir, 'public')));
 app.set('view engine', 'ejs');
 
 //Sessions
-const store = new connetMongoDBsession({
-    uri: process.env.MONGODB_URL,
-    collection: 'sessions'
+const store = new MongoStore({
+    mongoUrl: process.env.MONGODB_URL,
+    collectionName: 'sessions'
 });
 
 app.use(session({
@@ -33,7 +33,7 @@ app.use(session({
     // Forces session to be saved back to the session store, even if not modified
     resave: false,
     // Forces a session that is "uninitialized" to be saved to the store
-    saveUninitialized: true,
+    saveUninitialized: false,
     //Session Storage in MongoDB
     store: store
 }));
@@ -48,7 +48,7 @@ app.use('/host', (req, res, next) => {
         res.redirect('/login');
     }
 }, hostRoute);
-app.use('/host/fav', (req, res, next) => {   
+app.use('/', (req, res, next) => {   
     if(req.session.isLoggedIn){
         next();
     } else {

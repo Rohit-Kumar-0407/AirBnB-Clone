@@ -8,7 +8,7 @@ const Homes = require('../models/registeredHomesDataModel');
 const getFavourites = (req, res, next) => {
     FavHomes.find().populate("homeId").then((favourites) => {
         const favouriteHomes = favourites.map(fav => fav.homeId);
-        res.render('user/favourite-list', {homes: favouriteHomes, title: 'Favourites', isLoggedIn: req.session.isLoggedIn});
+        res.render('user/favourite-list', {homes: favouriteHomes, title: 'Favourites', isLoggedIn: req.session.isLoggedIn,  user: req.session.user});
     }).catch((err) => {
         console.log(err);
     })

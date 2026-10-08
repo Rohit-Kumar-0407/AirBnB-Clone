@@ -3,12 +3,12 @@ const FavHomes = require('../models/favouritesDataModel');
 
 //GET Controllers
 const getAddHome = (req,res,next) => {
-    res.render('host/add-home', {title: 'Register Home', isLoggedIn: req.session.isLoggedIn});
+    res.render('host/add-home', {title: 'Register Home', isLoggedIn: req.session.isLoggedIn, user: req.session.user});
 };
 
 const getHostHomeList = (req, res, next) => {
     Homes.find().then((homes) => {
-        res.render('host/host-home', {homes: homes, title: 'Host Home Listing', isLoggedIn: req.session.isLoggedIn});
+        res.render('host/host-home', {homes: homes, title: 'Host Home Listing', isLoggedIn: req.session.isLoggedIn, user: req.session.user});
     }).catch((err) => {
         console.log(err);
     })
@@ -20,10 +20,10 @@ const geteditHome = (req,res,next) => {
     if(editing == 'True'){
         Homes.findById(homeId).then((home) => {
             if(home.length == 0){
-                res.status(404).render('page404', {title: 'ERROR 404', isLoggedIn: req.session.isLoggedIn});
+                res.status(404).render('page404', {title: 'ERROR 404', isLoggedIn: req.session.isLoggedIn, user: req.session.user});
             }
             else {
-                res.render('host/edit-home', {title: 'Edit Home', home: home, isLoggedIn: req.session.isLoggedIn});
+                res.render('host/edit-home', {title: 'Edit Home', home: home, isLoggedIn: req.session.isLoggedIn, user: req.session.user});
             }
         }).catch((err) => {
             console.log(err);
@@ -43,7 +43,7 @@ const postaddHome = (req, res, next) => {
     }).catch((err) => {
         console.log(err);
     })
-    res.render('host/home-added', {title: 'Home Added', editing: 'False', isLoggedIn: req.session.isLoggedIn});
+    res.render('host/home-added', {title: 'Home Added', editing: 'False', isLoggedIn: req.session.isLoggedIn, user: req.session.user});
 };
 
 const updateHome = (req, res, next) => {
@@ -63,7 +63,7 @@ const updateHome = (req, res, next) => {
         //Saving New Data
         home.save().then((result) => {
             console.log('Home Updated Successfully');
-            res.render('host/home-added', {title: 'Home Updated', editing, isLoggedIn: req.session.isLoggedIn});
+            res.render('host/home-added', {title: 'Home Updated', editing, isLoggedIn: req.session.isLoggedIn, user: req.session.user});
         }).catch((err) => {
             console.log(err);
         })

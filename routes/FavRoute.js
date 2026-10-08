@@ -3,7 +3,7 @@ const FavRoute = express.Router();
 const FavControllers = require('../controllers/FavControllers');
 
 //GET Route
-FavRoute.get('/', FavControllers.getFavourites);
+FavRoute.get('/favourites', FavControllers.getFavourites);
 
 //POST Route
 FavRoute.post('/add-favourites', FavControllers.postFavourites);

@@ -4,23 +4,35 @@ const User = require('../models/UserModel');
 
 //GET Route
 const getLogin = (req, res, next) => {
-    res.render('auth/login-page', {title: 'Login Page', isLoggedIn: false});
+    res.render('auth/login-page', {title: 'Login Page', isLoggedIn: false, user: {} });
 }
 
 const getSignUp = (req, res, next) => {
-    res.render('auth/sign-up', {title: 'Sign Up', isLoggedIn: false});
+    res.render('auth/sign-up', {title: 'Sign Up', isLoggedIn: false,  user: {}});
 };
 
 //POST Route
 const postLogin = async (req, res, next) => {
     const {email, password} = req.body;
     const user = await User.findOne({email: email});
-    if(!user){
-        res.status(422).render('auth/login-page', {title: 'Login', isLoggedIn: false, errorMessages: ["User does not exist"], oldInput: {email}});
+    if(user){
+        bcryptjs.compare(password, user.hashedPassword).then((isMatch) => {
+            if(isMatch){
+                req.session.isLoggedIn = true;
+                req.session.user = user;
+                res.redirect('/');
+            } else {
+                res.status(422).render('auth/login-page', {title: 'Login', isLoggedIn: false, errorMessages: ["Incorrect Password"], oldInput: {email},  user: req.session.user});
+            }
+            
+        }).catch((err) => {
+            console.log(err);
+        })
+        
+    } else {
+        res.status(422).render('auth/login-page', {title: 'Login', isLoggedIn: false, errorMessages: ["User does not exist"], oldInput: {email}, user: req.session.user});
+        
     }
-
-    req.session.isLoggedIn = true;  //Setting a Session
-    res.redirect('/');
 }
 
 const postLogout = (req, res, next) => {
@@ -105,7 +117,7 @@ const postSignUp = [
         const errors = validationResult(req);
 
         if(!errors.isEmpty()){
-            return res.status(422).render('auth/sign-up', {title: 'Sign Up', isLoggedIn: false, errorMessages: errors.array().map(error => error.msg), oldInput: {firstName, lastName, email}});
+            return res.status(422).render('auth/sign-up', {title: 'Sign Up', isLoggedIn: false, errorMessages: errors.array().map(error => error.msg), oldInput: {firstName, lastName, email},  user: {}});
         } else {
             bcryptjs.hash(password, 12).then((hashedPassword) => {
                 const user = new User({firstName, lastName, email, hashedPassword, role});
