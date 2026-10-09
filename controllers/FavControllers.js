@@ -1,47 +1,39 @@
 //Core Modules
 const mongoose = require('mongoose');
+const User = require('../models/UserModel');
 
 //Local Module
-const FavHomes = require('../models/favouritesDataModel');
 const Homes = require('../models/registeredHomesDataModel');
 
-const getFavourites = (req, res, next) => {
-    FavHomes.find().populate("homeId").then((favourites) => {
-        const favouriteHomes = favourites.map(fav => fav.homeId);
-        res.render('user/favourite-list', {homes: favouriteHomes, title: 'Favourites', isLoggedIn: req.session.isLoggedIn,  user: req.session.user});
-    }).catch((err) => {
-        console.log(err);
-    })
+const getFavourites = async (req, res, next) => {
+    const userId = req.session.user._id;
+    const user = await User.findById(userId).populate('favourites');
+    console.log(user);
+    res.render('user/favourite-list', {homes: user.favourites, title: 'Favourites', isLoggedIn: req.session.isLoggedIn,  user: req.session.user});
 }
-
-const postFavourites = (req, res, next) => {
+const postFavourites = async (req, res, next) => {
     const homeId = req.body.homeId;
-    FavHomes.findOne({homeId: homeId}).then((existingFav) => {
-        if(existingFav){
-            console.log('Already Added');
-            res.redirect('/favourites');
-        } else {
-            const fav = new FavHomes({homeId});
-            fav.save().then((result) => {
-                console.log("Favourites Added Succesfully");
-                console.log(result);
-                res.redirect('/favourites');
-            }).catch((err) => {
-                console.log(err);
-            })
-        }
-    })
+    const userId = req.session.user._id;
+    const user = await User.findById(userId).populate('favourites');
+    
+    const alreadyFaved = user.favourites.some(favId => favId.toString() === homeId);
+    
+    if (!alreadyFaved) {
+        user.favourites.push(homeId);
+        await user.save();
+    }
+    
+    res.redirect('/favourites');
 }
 
-const postDeleteFavourites = (req, res, next) => {
+const postDeleteFavourites = async (req, res, next) => {
     const favhomeId = req.body.favhomeId;
-    FavHomes.findOneAndDelete({homeId: new mongoose.Types.ObjectId(favhomeId)}).then((result) => {
-        console.log(result);
-        console.log('Favourite Deleted Successfully');
-        res.redirect('/favourites');
-    }).catch((err) => {
-        console.log(err);
-    })
+    const userId = req.session.user._id;
+    const user = await User.findById(userId);
+
+    user.favourites = user.favourites.filter(fav => fav.toString() !== favhomeId);
+    await user.save();    
+    res.redirect('/favourites');
 }
 
 exports.postFavourites = postFavourites;

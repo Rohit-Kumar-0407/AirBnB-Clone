@@ -1,5 +1,4 @@
 const Homes = require('../models/registeredHomesDataModel')
-const FavHomes = require('../models/favouritesDataModel');
 
 //GET Controllers
 const getAddHome = (req,res,next) => {
