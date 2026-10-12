@@ -16,5 +16,6 @@ userRoute.get('/reserve', HomeControllers.getReserve);
 userRoute.get('/bookings', HomeControllers.getBookings);
 userRoute.get('/home-listing', HomeControllers.getHomeListings);
 userRoute.get('/home/:homeId', HomeControllers.getHomeDetails);
+userRoute.get('/rules/:homeId', HomeControllers.getHouseRules);
 
 module.exports = userRoute;

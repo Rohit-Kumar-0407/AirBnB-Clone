@@ -1,4 +1,5 @@
 const Homes = require('../models/registeredHomesDataModel')
+const fs = require('fs');
 
 //GET Controllers
 const getAddHome = (req,res,next) => {
@@ -34,8 +35,15 @@ const geteditHome = (req,res,next) => {
 const postaddHome = (req, res, next) => {
     console.log(req.body);
     //Unpacking contents from req.body
-    const {name, phoneNumber, houseType, location, rating, photourl, price, description} = req.body;      
-    const home = new Homes({name, phoneNumber, houseType, location, rating, photourl, price, description});
+    const {name, phoneNumber, houseType, location, rating, price, description} = req.body;
+
+    if(!req.file){
+        console.log('No images provided');
+        return res.status(422).redirect('/host/add-home')
+    }     
+    const photo = '/' + req.file.path.replace(/\\/g, '/');
+  
+    const home = new Homes({name, phoneNumber, houseType, location, rating, photo, price, description});
     home.save().then((result) => {
         console.log('Data Added Successfully');
         console.log(result);
@@ -49,7 +57,7 @@ const updateHome = (req, res, next) => {
     const editing = req.query.editing;
     const homeId = req.params.homeId;
     //Unpacking contents from req.body
-    const {name, phoneNumber, houseType, location, rating, description, photourl, price} = req.body;      
+    const {name, phoneNumber, houseType, location, rating, description, photo, price} = req.body;      
     Homes.findById(homeId).then((home) => {
         home.name = name,
         home.phoneNumber = phoneNumber,
@@ -57,8 +65,17 @@ const updateHome = (req, res, next) => {
         home.location = location,
         home.rating = rating,
         home.description = description,
-        home.photourl = photourl,
         home.price = price
+
+        if(req.file){
+            fs.unlink(home.photo, (err) => {
+                if(err){
+                    console.log(err);
+                }
+            })
+            home.photo = '/' + req.file.path.replace(/\\/g, '/');
+        }
+
         //Saving New Data
         home.save().then((result) => {
             console.log('Home Updated Successfully');

@@ -39,3 +39,4 @@ const postDeleteFavourites = async (req, res, next) => {
 exports.postFavourites = postFavourites;
 exports.getFavourites = getFavourites;
 exports.postDeleteFavourites = postDeleteFavourites;
+

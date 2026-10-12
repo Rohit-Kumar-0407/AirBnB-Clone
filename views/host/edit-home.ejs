@@ -9,7 +9,7 @@
             description: 'Update listing details so guests see accurate pricing, contact information, and stay details.'
         }) %>
 
-        <form action="/host/edit-home/<%= home._id %>?editing=True" method="POST" class="mt-6 grid gap-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-2">
+        <form action="/host/edit-home/<%= home._id %>?editing=True" method="POST" enctype="multipart/form-data" class="mt-6 grid gap-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-2">
             <input type="hidden" value="<%- home._id %>">
             <div>
                 <label for="name" class="mb-2 block text-sm font-medium text-slate-700">Owner Name</label>
@@ -45,8 +45,17 @@
                 <input id="price" type="number" name="price" value="<%= editHome.price || '' %>" placeholder="Enter price" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
             </div>
             <div class="lg:col-span-2">
-                <label for="photourl" class="mb-2 block text-sm font-medium text-slate-700">Photo URL</label>
-                <input id="photourl" type="text" name="photourl" value="<%= editHome.photourl || '' %>" placeholder="Enter photo URL" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100">
+                <label for="photo" class="mb-2 block text-sm font-medium text-slate-700">Photo</label>
+                <input type="file" name="photo" id="photo" accept="image/*" class="hidden" aria-label="Choose photo">
+                <label for="photo" class="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-rose-500 focus:ring-4 focus:ring-rose-100 flex items-center justify-between bg-white cursor-pointer hover:bg-slate-50">
+                    <span id="file-name" class="text-slate-500"><%= editHome.photo ? 'Current: ' + editHome.photo.split('/').pop() : 'Choose a photo...' %></span>
+                    <svg class="w-5 h-5 text-slate-400 ml-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1.25rem; height: 1.25rem;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                </label>
+                <% if (editHome.photo) { %>
+                <p class="mt-2 text-xs text-slate-500">Current: <img src="<%= editHome.photo %>" alt="Current photo" class="inline-block h-8 w-auto ml-2 rounded"></p>
+                <% } %>
             </div>
             <div class="flex gap-3 lg:col-span-2">
                 <button type="submit" class="rounded-md bg-rose-600 px-5 py-3 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200 cursor-pointer">Save changes</button>
@@ -54,5 +63,19 @@
             </div>
         </form>
     </main>
+    <script>
+        document.getElementById('photo').addEventListener('change', function(e) {
+            const fileName = document.getElementById('file-name');
+            if (e.target.files.length > 0) {
+                fileName.textContent = e.target.files[0].name;
+                fileName.classList.remove('text-slate-500');
+                fileName.classList.add('text-slate-900');
+            } else {
+                fileName.textContent = 'Choose a photo...';
+                fileName.classList.remove('text-slate-900');
+                fileName.classList.add('text-slate-500');
+            }
+        });
+    </script>
 </body>
 </html>

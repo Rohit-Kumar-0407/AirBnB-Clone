@@ -6,6 +6,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const MongoStore = require('connect-mongo').default;
+const multer = require('multer');
 
 //Local Modules
 const hostRoute = require('./routes/hostRoute');
@@ -17,8 +18,41 @@ const FavRoute = require('./routes/FavRoute');
 
 
 //Common Commands
+const randomizedString = (length) => {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for(let i=0; i<length; i++){
+        result += letters.charAt(Math.floor(Math.random()*letters.length))
+    }
+    return result;
+}
+
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype == 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg'){
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/")
+    },
+
+    filename: (req, file, cb) => {
+        cb(null, randomizedString(10) + '-' + file.originalname)
+    }
+});
+
+const multerOptions = {
+    storage, fileFilter
+}
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(rootDir, 'public')));
+app.use('/uploads', express.static(path.join(rootDir, 'uploads')));
+app.use(multer(multerOptions).single('photo'));
 app.set('view engine', 'ejs');
 
 //Sessions

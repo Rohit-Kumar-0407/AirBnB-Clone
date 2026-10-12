@@ -20,7 +20,7 @@
             <% } %>
             <% homes.forEach((home) => { %>
             <% const fallbackPhoto = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'; %>
-            <% const homePhoto = home.photourl && /^(https?:\/\/|\/)/.test(home.photourl) ? home.photourl : fallbackPhoto; %>
+            <% const homePhoto = home.photo ? (home.photo.startsWith('/') || home.photo.startsWith('http') ? home.photo : '/' + home.photo.replace(/\\/g, '/')) : fallbackPhoto; %>
             <div class="house-display-catalogs overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><a href="/home/<%= home._id %>">
                 <div class="relative">
                     <img src="<%= homePhoto %>" alt="<%= home.houseType %> in <%= home.location %>" onerror="this.src='<%= fallbackPhoto %>'" class="h-32 w-full object-cover">
